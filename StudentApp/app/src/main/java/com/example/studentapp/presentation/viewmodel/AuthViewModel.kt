@@ -8,7 +8,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import com.example.studentapp.util.Result
-class AuthViewModel(
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
+
+@HiltViewModel
+class AuthViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val signUpUseCase: SignUpUseCase
 ):ViewModel() {

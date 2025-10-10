@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     kotlin("plugin.serialization") version "2.2.0"//Serialization
     alias(libs.plugins.google.gms.google.services)//AuthFireBase
+    id("com.google.devtools.ksp")//Hilt Ksp(All @Annotation File)
+    id("com.google.dagger.hilt.android")//Compiler
 
 }
 
@@ -64,8 +66,12 @@ dependencies {
     //---------User Define-------------------------------
     implementation(libs.androidx.navigation.compose)//Navigation
     implementation(libs.kotlinx.serialization.json)//Serialization
-
     implementation(libs.androidx.material.icons.extended)//Icons Extend
+    implementation(libs.hilt.android)//Hilt Compiler
+    ksp(libs.hilt.android.compiler)//Hilt Ksp(All @Annotation File)
+    implementation(libs.androidx.hilt.navigation.compose)//Hilt For Compose
+
+
 
 
 }
