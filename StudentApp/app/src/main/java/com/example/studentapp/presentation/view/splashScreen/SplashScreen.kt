@@ -3,138 +3,97 @@ package com.example.studentapp.presentation.view.splashScreen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import com.example.studentapp.R
-import com.example.studentapp.navigation.Routes
-
-import kotlinx.coroutines.delay
-
 
 @Composable
-//@Preview(showBackground = true)
-fun SplashScreen(navHostController: NavHostController) {
-    LaunchedEffect(Unit){
-        //3 Sec ke baat tum ye sab kar na ok
-        delay(3000)
-        //Mean Navigate kar do and Splash Screen ko Stack se pop kar do
-        navHostController.navigate(Routes.Screen_one){
-            popUpTo(Routes.SplashScreen){
-                inclusive=true
-            }
-        }
+fun SplashScreen(
+    onFinish: () -> Unit
+) {
+    LaunchedEffect(Unit) {
+        kotlinx.coroutines.delay(2000) // optional 2-second splash delay
+        onFinish()
     }
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF0097A7)),
-        verticalArrangement = Arrangement.Center,
+            .background(Color(0xFFE9F6D7)),
         horizontalAlignment = Alignment.CenterHorizontally,
-
-
-        ){
-        MiddleBox()
-        NoticesTitle()
-
-    }
-
-}
-@Composable
-fun MiddleBox() {
-    Box{
+        verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically)
+    ) {
         Image(
-            painter = painterResource(R.drawable.splash_bg),
-            contentDescription = "splash",
-            modifier = Modifier.height(224.dp).width(224.dp)
+            painter = painterResource(R.drawable.main_logo),
+            contentDescription = "Main Logo",
+            modifier = Modifier.size(200.dp)
         )
-
-        Image(
-            painter = painterResource(R.drawable.splash),
-            contentDescription = "splash",
-            modifier = Modifier.height(241.dp).width(185.dp)
-        )
+        Campiq()
     }
-    
 }
+
 @Composable
-fun NoticesTitle() {
-    Box(
-        modifier = Modifier
-            .padding(16.dp).height(85.dp).width(269.dp),
-        contentAlignment = Alignment.Center
+fun Campiq() {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         Text(
-            buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        color = Color.Red,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 70.sp
-                    )
-                ) {
-                    append("N")
-                }
-
-                withStyle(
-                    style = SpanStyle(
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold,
-                                fontSize = 70.sp
-                    )
-                ) {
-                    append("oti")
-                }
-
-                withStyle(
-                    style = SpanStyle(
-                        color = Color.Red,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 70.sp
-                    )
-                ) {
-                    append("c")
-                }
-
-                withStyle(
-                    style = SpanStyle(
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 70.sp
-                    )
-                ) {
-                    append("es")
-                }
-            },
-            fontSize = 32.sp,
-            fontWeight = FontWeight.Bold,
-            style = TextStyle(
-                shadow = Shadow(
-                    color = Color.Gray,
-                    offset = Offset(6f, 6f),
-                    blurRadius = 4f
-                )
-            )
+            "Ca",
+            color = Color(0xFFFF3131),
+            fontSize = 70.sp,
+            fontWeight = FontWeight.ExtraBold,
+            fontFamily = FontFamily(
+                Font(R.font.protest_strike)
+            ),
+            style = MaterialTheme.typography.titleLarge
+        )
+        Text(
+            "mp",
+            color = Color.Black,
+            fontSize = 70.sp,
+            fontWeight = FontWeight.ExtraBold,
+            fontFamily = FontFamily(
+                Font(R.font.protest_strike)
+            ),
+            style = MaterialTheme.typography.titleLarge
+        )
+        Text(
+            "i",
+            color = Color(0xFFFF3131),
+            fontSize = 70.sp,
+            fontWeight = FontWeight.ExtraBold,
+            fontFamily = FontFamily(
+                Font(R.font.protest_strike)
+            ),
+            style = MaterialTheme.typography.titleLarge
+        )
+        Text(
+            "q",
+            color = Color.Black,
+            fontSize = 70.sp,
+            fontWeight = FontWeight.ExtraBold,
+            fontFamily = FontFamily(
+                Font(R.font.protest_strike)
+            ),
+            style = MaterialTheme.typography.titleLarge
         )
     }
 }
+
+
+

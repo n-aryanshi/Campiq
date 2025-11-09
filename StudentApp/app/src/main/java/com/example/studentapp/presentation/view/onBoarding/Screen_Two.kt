@@ -1,198 +1,125 @@
-package com.example.class_management_system.presentation.view.onBoarding
+package com.example.studentapp.presentation.view.onBoarding
 
-
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.studentapp.R
-
 import com.example.studentapp.navigation.Routes
 
 @Composable
 fun Screen_Two(navHostController: NavHostController) {
-
-    //column{
-    //box{
-    //button
-    //image
-    // }
-    //text
-    //text
-    //text
-    //button
-    //}
-
-
-
     Column(
         modifier = Modifier
-            .background(Color(0XFF06919C))
             .fillMaxSize()
+            .background(Color(0xFFE9F6D7))
+
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         ) {
-            //image
-            Image(
-                painter = painterResource(R.drawable.obs2),
-                contentDescription = "screen 2",
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .width(413.dp)
-                    .height(413.dp)
-            )
-
-            //clickable Text - top right corner
-            Text(
-                text = "Skip",
-                color = Color.Black,
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .clickable(onClick = {
-                        navHostController.navigate(Routes.LoginOne){
-                            popUpTo(Routes.Screen_Two){
-                                inclusive=true
-                            }
-                        }
-                    })
-                    .padding(top = 10.dp, end = 10.dp)
-            )
-
+            Image2(painter = painterResource(R.drawable.obs2))
+            Top(navHostController)
         }
 
-//      Text()
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween // 👈 centers whole column
         ) {
-            Spacer(modifier = Modifier.height(30.dp))
-            ColoredTextSec1()
+            Spacer(Modifier.height(30.dp))
+            Text2()
+            Spacer(Modifier.height(70.dp))
+            Bottom2(navHostController)
 
-//          Text() - Quick access to rooms and faculty details
-            Text(
-                text = "Get all the Notices and Reminders at one place",
-                fontSize = 22.sp,
-                color = Color.White,
-                modifier = Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp),
-                textAlign = TextAlign.Center
-            )
-
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.BottomEnd
-            ) {
-                Button(
-                    onClick = {navHostController.navigate(Routes.Screen_Three){
-                        popUpTo(Routes.Screen_Two){
-                            inclusive=true
-                        }
-                    } },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.White,        // Background
-                        contentColor = Color(0xFFFF3131) ),    // Text/Icon color (red)
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd) // works inside Box
-                        .padding(end = 32.dp, bottom = 32.dp),
-
-                ) {
-                    Text(
-                        text = "Next",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp,
-                        style = TextStyle(
-                            shadow = Shadow(
-                                color = Color.Black.copy(alpha = 0.5f), // shadow color
-                                offset = Offset(2f, 2f),                // x, y offset
-                                blurRadius = 4f                         // softness of shadow
-                            ),
-
-                            ),
-
-                        )
-                }
-            }
         }
 
-    }
 
+    }
 }
 
-@Composable
-fun ColoredTextSec1() {
-    val text = buildAnnotatedString {
-        withStyle(style = SpanStyle(
-            color = Color.White,
-            fontSize = 36.sp,
-            fontWeight = FontWeight.Bold
-        )) {
-            append("Never miss any\n")
-        }
-        withStyle(style = SpanStyle(
-            color = Color(0XFFFF3131),
-            fontSize = 36.sp,
-            fontWeight = FontWeight.Bold
-        )) {
-            append("Imp ")
-        }
-        withStyle(style = SpanStyle(
-            color = Color.White,
-            fontSize = 36.sp,
-            fontWeight = FontWeight.Bold
-        )) {
-            append("Info")
-        }
-    }
 
+
+@Composable
+fun Text2() {
     Text(
-        text = text,
-        textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.headlineLarge.copy(
-            lineHeight = 48.sp, // <-- Increase vertical height of text
+        "Never Miss",
+        fontSize = 50.sp,
+        fontWeight = FontWeight.ExtraBold,
+        fontFamily = FontFamily(Font(R.font.poppin_strike)),
+        color = Color.Black,
+        style = MaterialTheme.typography.titleLarge,
+        letterSpacing = 3.sp
+    )
+    Spacer(Modifier.width(20.dp))
+    Row {
+        Text(
+            "Imp",
+            fontSize = 50.sp,
             fontWeight = FontWeight.ExtraBold,
-            shadow = Shadow(
-                color = Color.Black.copy(alpha = 0.5f),
-                offset = Offset(6f, 6f),
-                blurRadius = 4f
-            )),
-        modifier = Modifier.padding(16.dp)
+            fontFamily = FontFamily(Font(R.font.poppin_strike)),
+            color = Color(0xFFFF3131),
+            style = MaterialTheme.typography.titleLarge,
+            letterSpacing = 3.sp
+        )
+        Spacer(Modifier.width(18.dp))
+        Text(
+            "Info",
+            fontSize = 50.sp,
+            fontWeight = FontWeight.ExtraBold,
+            fontFamily = FontFamily(Font(R.font.poppin_strike)),
+            color = Color.Black,
+            style = MaterialTheme.typography.titleLarge,
+            letterSpacing = 3.sp
+        )
+    }
+    Spacer(Modifier.height(50.dp))
+    Text(
+        "Get all homework and notices in one\nplace",
+        modifier = Modifier.fillMaxWidth(),
+        textAlign = TextAlign.Center,
+        fontSize = 20.sp,
     )
 
 }
 
+@Composable
+fun Bottom2(navHostController: NavHostController) {
+    Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp), horizontalArrangement = Arrangement.End){
+        Box(
+            modifier = Modifier
+                .clickable{
+                    navHostController.navigate(Routes.Screen_Three)
+                }
+                .height(50.dp)
+                .width(90.dp)
+                .background(Color(0xFFCEEE97), RoundedCornerShape(30.dp)),
+            contentAlignment = Alignment.Center
+        ) {
+            Text("Next", fontSize = 30.sp, fontWeight = FontWeight.ExtraBold, color = Color(0xFFFF3131))
+        }
+    }
+}
 

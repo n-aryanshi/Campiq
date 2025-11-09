@@ -6,186 +6,179 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-
 import com.example.studentapp.R
 import com.example.studentapp.navigation.Routes
 
 @Composable
-
 fun Screen_one(navHostController: NavHostController) {
-
-    //column{
-    //box{
-    //button
-    //image
-    // }
-    //text
-    //text
-    //text
-    //button
-    //}
-
     Column(
         modifier = Modifier
-            .background(Color(0XFF06919C))
             .fillMaxSize()
+            .background(Color(0xFFE9F6D7))
+
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            //image
-            Image(
-                painter = painterResource(R.drawable.obs1),
-                contentDescription = "screen 1",
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .width(413.dp)
-                    .height(413.dp)
-            )
-
-            //clickable Text - top right corner
-            Text(
-                text = "Skip",
-                color = Color.White,
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .clickable(onClick = {navHostController.navigate(Routes.LoginOne){
-                        popUpTo(Routes.Screen_Two){
-                            inclusive=true
-                        }
-                    } })
-                    .padding(top = 10.dp, end = 10.dp)
-            )
-
+        Box {
+            Image2(painterResource(R.drawable.obs1))
+            Top(navHostController)
         }
-
-//      Text()
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween // 👈 centers whole column
         ) {
-            Spacer(modifier = Modifier.height(30.dp))
-            ColoredText1()
+            Spacer(Modifier.height(30.dp))
+            Text()
+            Spacer(Modifier.height(70.dp))
+            Bottom(navHostController)
 
-//          Text() - Quick access to rooms and faculty details
-            Text(
-                text = "Quick access to rooms and faculty details",
-                fontSize = 22.sp,
-                color = Color.White,
-                modifier = Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp),
-                textAlign = TextAlign.Center
-            )
-
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.BottomEnd
-            ) {
-                Button(
-                    onClick = {navHostController.navigate(Routes.Screen_Two)},
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.White,        // Background
-                        contentColor = Color(0xFFFF3131) ),    // Text/Icon color (red)
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd) // works inside Box
-                        .padding(end = 32.dp, bottom = 32.dp)
-
-                ) {
-                    Text(
-                        text = "Next",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp,
-                        style = TextStyle(
-                            shadow = Shadow(
-                                color = Color.Black.copy(alpha = 0.5f), // shadow color
-                                offset = Offset(2f, 2f),                // x, y offset
-                                blurRadius = 4f                         // softness of shadow
-                            ),
-
-                            ),
-
-                        )
-                }
-            }
         }
 
+
     }
+}
+
+@Composable
+fun Image2(painter: Painter) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(413.dp),
+        contentAlignment = Alignment.TopCenter
+    ) {
+        Image(
+            painter = painter,
+            contentDescription = "classRoom",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .width(413.dp)
+                .height(413.dp)
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Top(navHostController: NavHostController) {
+    TopAppBar(
+        title = {},
+        actions = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp)
+                    .padding(horizontal = 10.dp), horizontalArrangement = Arrangement.End
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(50.dp)
+                        .clickable{
+                            navHostController.navigate(Routes.LoginOne)
+                        }
+                        .background(Color(0xFFCEEE97), CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        "Skip",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        color = Color(0xFFFF3131)
+                    )
+                }
+            }
+
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.Transparent
+        )
+    )
+}
+
+@Composable
+fun Text() {
+    Text(
+        "Find You",
+        fontSize = 50.sp,
+        fontWeight = FontWeight.ExtraBold,
+        fontFamily = FontFamily(Font(R.font.poppin_strike)),
+        color = Color.Black,
+        style = MaterialTheme.typography.titleLarge,
+        letterSpacing = 3.sp
+    )
+    Spacer(Modifier.width(20.dp))
+    Row {
+        Text(
+            "Class",
+            fontSize = 50.sp,
+            fontWeight = FontWeight.ExtraBold,
+            fontFamily = FontFamily(Font(R.font.poppin_strike)),
+            color = Color(0xFFFF3131),
+            style = MaterialTheme.typography.titleLarge,
+            letterSpacing = 3.sp
+        )
+        Spacer(Modifier.width(18.dp))
+        Text(
+            "Fast",
+            fontSize = 50.sp,
+            fontWeight = FontWeight.ExtraBold,
+            fontFamily = FontFamily(Font(R.font.poppin_strike)),
+            color = Color.Black,
+            style = MaterialTheme.typography.titleLarge,
+            letterSpacing = 3.sp
+        )
+    }
+    Spacer(Modifier.height(50.dp))
+    Text(
+        "See which room and which teacher\nanytime",
+        modifier = Modifier.fillMaxWidth(),
+        textAlign = TextAlign.Center,
+        fontSize = 20.sp,
+    )
 
 }
 
 @Composable
-fun ColoredText1() {
-    val text = buildAnnotatedString {
-        withStyle(style = SpanStyle(
-            color = Color.White,
-            fontSize = 36.sp,
-            fontWeight = FontWeight.Bold
-        )) {
-            append("Find Your\n")
-        }
-        withStyle(style = SpanStyle(
-            color = Color(0XFFFF3131),
-            fontSize = 36.sp,
-            fontWeight = FontWeight.Bold
-        )) {
-            append("Class ")
-        }
-        withStyle(style = SpanStyle(
-            color = Color.White,
-            fontSize = 36.sp,
-            fontWeight = FontWeight.Bold
-        )) {
-            append("with Ease")
+fun Bottom(navHostController: NavHostController) {
+    Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp), horizontalArrangement = Arrangement.End){
+        Box(
+            modifier = Modifier
+                .clickable{
+                    navHostController.navigate(Routes.Screen_Two)
+                }
+                .height(50.dp)
+                .width(90.dp)
+                .background(Color(0xFFCEEE97), RoundedCornerShape(30.dp)),
+            contentAlignment = Alignment.Center
+        ) {
+           Text("Next", fontSize = 30.sp, fontWeight = FontWeight.ExtraBold, color = Color(0xFFFF3131))
         }
     }
-
-        Text(
-            text = text,
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.headlineLarge.copy(
-                lineHeight = 48.sp, // <-- Increase vertical height of text
-
-                shadow = Shadow(
-                    color = Color.Black.copy(alpha = 0.5f),
-                    offset = Offset(6f, 6f),
-                    blurRadius = 4f
-                )),
-            modifier = Modifier.padding(16.dp)
-        )
-
 }
 
-
-        

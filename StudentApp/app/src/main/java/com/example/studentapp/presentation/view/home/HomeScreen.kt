@@ -1,9 +1,9 @@
-
 package com.example.studentapp.presentation.view.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -55,16 +55,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.studentapp.R
+import com.example.studentapp.navigation.Routes
+import com.example.studentapp.presentation.viewmodel.UserPreferencesViewModel
 
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(
+    navHostController: NavHostController,
+    userPreferencesViewModel: UserPreferencesViewModel
+) {
 
     Box(
         modifier = Modifier.fillMaxSize()
-    ){
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -75,14 +81,14 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .fillMaxWidth(),
                 contentAlignment = Alignment.BottomCenter
-            ){
+            ) {
 
                 Image(
                     painter = painterResource(R.drawable.rect_home_bg),
                     contentDescription = null,
-                    modifier = Modifier.fillMaxWidth()
-                        .height(285.dp)
-                    ,contentScale = ContentScale.Crop
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(285.dp), contentScale = ContentScale.Crop
                 )
 
                 PosterCarousel()
@@ -90,13 +96,12 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
             GridBody()
 
-            CustomBottomNav()
+            CustomBottomNav(navHostController, userPreferencesViewModel)
         }
         //middle
 
 
         //bottom
-
 
 
     }
@@ -119,7 +124,7 @@ fun Element(
             .background(backgroundColor, shape = RoundedCornerShape(12.dp)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         Image(
             painter = painter,
             contentDescription = text,
@@ -137,7 +142,6 @@ fun Element(
 
     }
 }
-
 
 
 @Composable
@@ -176,8 +180,6 @@ fun GridBody() {
 }
 
 
-
-
 data class GridItem(
     val painter: Painter,
     val text: String,
@@ -185,69 +187,67 @@ data class GridItem(
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Composable
-@Preview(showBackground = true)
-fun PosterBox() {
-    val drawerState = rememberDrawerState(DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-//    val userName by userViewModel.userName.collectAsState()
-    val userName = "Alex"
 
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet {
-                Text("Menu Item 1", modifier = Modifier.padding(16.dp))
-                Text("Menu Item 2", modifier = Modifier.padding(16.dp))
-            }
-        }
-    ) {
-        Scaffold(
-            modifier = Modifier
-                .background(color = Color(0XFF06919C)),
-            topBar = {
-                TopAppBar(
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color(0XFF67C6DC)),
-                    title = { Text(
-                        text = "Hi, $userName",
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White)
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = { scope.launch { drawerState.open() } }) {
-                            Icon(Icons.Default.Menu,tint = Color.White, contentDescription = "Menu")
-                        }
-                    },
-                    actions = {
-                        IconButton(onClick = { /* handle notifications */ }) {
-                            Icon(Icons.Default.Notifications,tint = Color.White, contentDescription = "Notifications")
-                        }
-                    }
-                )
-            }
-        ) { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .padding(
-                        PaddingValues(
-                            start = innerPadding.calculateStartPadding(LayoutDirection.Ltr),
-                            end   = innerPadding.calculateEndPadding(LayoutDirection.Ltr),
-                            bottom= innerPadding.calculateBottomPadding(),
-                            top   = 0.dp // 🔑 remove top padding
-                        )
-                    )
-                    .fillMaxSize()
 
-            ) {
-                HomeScreen()
-//                PosterCarousel()
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalFoundationApi::class)
+//fun PosterBox(userPreferencesViewModel: UserPreferencesViewModel) {
+//    val drawerState = rememberDrawerState(DrawerValue.Closed)
+//    val scope = rememberCoroutineScope()
+////    val userName by userViewModel.userName.collectAsState()
+//    val userName = "Alex"
+//
+//    ModalNavigationDrawer(
+//        drawerState = drawerState,
+//        drawerContent = {
+//            ModalDrawerSheet {
+//                Text("Menu Item 1", modifier = Modifier.padding(16.dp))
+//                Text("Menu Item 2", modifier = Modifier.padding(16.dp))
+//            }
+//        }
+//    ) {
+//        Scaffold(
+//            modifier = Modifier
+//                .background(color = Color(0XFF06919C)),
+//            topBar = {
+//                TopAppBar(
+//                    colors = TopAppBarDefaults.topAppBarColors(
+//                        containerColor = Color(0XFF67C6DC)),
+//                    title = { Text(
+//                        text = "Hi, $userName",
+//                        fontWeight = FontWeight.Bold,
+//                        color = Color.White)
+//                    },
+//                    navigationIcon = {
+//                        IconButton(onClick = { scope.launch { drawerState.open() } }) {
+//                            Icon(Icons.Default.Menu,tint = Color.White, contentDescription = "Menu")
+//                        }
+//                    },
+//                    actions = {
+//                        IconButton(onClick = { /* handle notifications */ }) {
+//                            Icon(Icons.Default.Notifications,tint = Color.White, contentDescription = "Notifications")
+//                        }
+//                    }
+//                )
+//            }
+//        ) { innerPadding ->
+//            Column(
+//                modifier = Modifier
+//                    .padding(
+//                        PaddingValues(
+//                            start = innerPadding.calculateStartPadding(LayoutDirection.Ltr),
+//                            end   = innerPadding.calculateEndPadding(LayoutDirection.Ltr),
+//                            bottom= innerPadding.calculateBottomPadding(),
+//                            top   = 0.dp // 🔑 remove top padding
+//                        )
+//                    )
+//                    .fillMaxSize()
+//
+//            ) {
+//                HomeScreen(userPreferencesViewModel)
+////                PosterCarousel()
+//            }
+//        }
+//    }
+//}
 @Composable
 fun PosterCarousel() {
     val pagerState = rememberPagerState(pageCount = { 3 })
@@ -265,7 +265,8 @@ fun PosterCarousel() {
                 .padding(8.dp)
         ) { page ->
             Card(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .wrapContentHeight(),
                 shape = RoundedCornerShape(10.dp),
                 colors = CardDefaults.cardColors(
@@ -280,12 +281,14 @@ fun PosterCarousel() {
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize()
                     )
+
                     1 -> Image(
                         painter = painterResource(id = R.drawable.notice_demo),
                         contentDescription = "Poster 2",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize()
                     )
+
                     2 -> Image(
                         painter = painterResource(id = R.drawable.notice_demo),
                         contentDescription = "Poster 3",
@@ -320,7 +323,10 @@ fun PosterCarousel() {
 
 
 @Composable
-fun CustomBottomNav() {
+fun CustomBottomNav(
+    navHostController: NavHostController,
+    userPreferencesViewModel: UserPreferencesViewModel
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -330,8 +336,11 @@ fun CustomBottomNav() {
         Image(
             painter = painterResource(id = R.drawable.ellipse_home_bg), // your white oval image
             contentDescription = null,
-            modifier = Modifier.width(407.dp) .height(114.dp)
-                .align(Alignment.BottomCenter).offset(y = 10.dp),
+            modifier = Modifier
+                .width(407.dp)
+                .height(114.dp)
+                .align(Alignment.BottomCenter)
+                .offset(y = 10.dp),
             contentScale = ContentScale.FillBounds,
 
             )
@@ -379,7 +388,16 @@ fun CustomBottomNav() {
                 painter = painterResource(id = R.drawable.home_icon), // home icon
                 contentDescription = "Home",
                 tint = Color.Unspecified,
-                modifier = Modifier.size(62.dp).offset(y = 4.dp)
+                modifier = Modifier
+                    .size(62.dp)
+                    .offset(y = 4.dp)
+                    .clickable {
+                        userPreferencesViewModel.setLoggedIn(false)
+                        navHostController.navigate(Routes.LoginOne){
+                            popUpTo(Routes.HomePage){inclusive= true}
+                        }
+
+                    }
             )
         }
     }

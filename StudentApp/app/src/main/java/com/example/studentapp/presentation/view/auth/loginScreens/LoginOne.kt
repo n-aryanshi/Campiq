@@ -61,13 +61,18 @@ import androidx.navigation.NavHostController
 import com.example.studentapp.R
 import com.example.studentapp.navigation.Routes
 import com.example.studentapp.presentation.viewmodel.AuthViewModel
+import com.example.studentapp.presentation.viewmodel.UserPreferencesViewModel
 import com.example.studentapp.util.Result
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginOne(navHostController: NavHostController, authViewModel: AuthViewModel) {
+fun LoginOne(
+    navHostController: NavHostController,
+    authViewModel: AuthViewModel,
+    userPreferencesViewModel: UserPreferencesViewModel
+) {
     val authState by authViewModel.authState.collectAsState()
     var loading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
@@ -80,6 +85,8 @@ fun LoginOne(navHostController: NavHostController, authViewModel: AuthViewModel)
         when (val state = authState) {
             is Result.Success -> {
                 loading = false
+                userPreferencesViewModel.setFirstTimeLogin(false)
+                userPreferencesViewModel.setLoggedIn(true)
                 delay(500)
                 navHostController.navigate(Routes.HomePage) {
                     popUpTo(Routes.LoginOne) { inclusive = true }
@@ -132,7 +139,7 @@ fun LoginOne(navHostController: NavHostController, authViewModel: AuthViewModel)
                 )
 
                 // Login form
-                LoginScreenView(navHostController,authViewModel)
+                LoginScreenView(navHostController, authViewModel)
 
                 // Child sitting on wall
                 Image(
@@ -158,7 +165,7 @@ fun LoginOne(navHostController: NavHostController, authViewModel: AuthViewModel)
 }
 
 @Composable
-fun LoginScreenView(navHostController: NavHostController,authViewModel: AuthViewModel) {
+fun LoginScreenView(navHostController: NavHostController, authViewModel: AuthViewModel) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordHidden by remember { mutableStateOf(true) }
@@ -188,18 +195,24 @@ fun LoginScreenView(navHostController: NavHostController,authViewModel: AuthView
         )
 
         // Username field
+        // Username field
         OutlinedTextField(
             value = username,
             onValueChange = { username = it },
             placeholder = {
                 Text(
                     text = "Username",
-                    color = Color(0XFF06919C),
+                    color = Color(0xFF06919C),
                     fontWeight = FontWeight.Bold,
                     fontSize = 19.sp,
                     modifier = Modifier.padding(start = 16.dp)
                 )
             },
+            textStyle = TextStyle(
+                color = Color(0xFF06919C),  // same as placeholder
+                fontWeight = FontWeight.Bold,
+                fontSize = 19.sp
+            ),
             modifier = Modifier
                 .width(280.dp)
                 .height(50.dp)
@@ -210,9 +223,11 @@ fun LoginScreenView(navHostController: NavHostController,authViewModel: AuthView
                 unfocusedContainerColor = Color(0xFFB5E6ED),
                 disabledContainerColor = Color(0xFFB5E6ED),
                 focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedTextColor = Color.Black
             )
         )
+
 
         Spacer(modifier = Modifier.height(18.dp))
 
@@ -247,7 +262,8 @@ fun LoginScreenView(navHostController: NavHostController,authViewModel: AuthView
                 unfocusedContainerColor = Color(0xFFB5E6ED),
                 disabledContainerColor = Color(0xFFB5E6ED),
                 focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedTextColor = Color.Black
             )
         )
 
@@ -284,7 +300,7 @@ fun LoginScreenView(navHostController: NavHostController,authViewModel: AuthView
         // Login button
         Button(
             onClick = {
-               authViewModel.login(username,password)
+                authViewModel.login(username, password)
             },
             colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
             shape = RoundedCornerShape(50.dp),

@@ -51,11 +51,12 @@ import com.example.studentapp.R
 
 import com.example.studentapp.navigation.Routes
 import com.example.studentapp.presentation.viewmodel.AuthViewModel
+import com.example.studentapp.presentation.viewmodel.UserPreferencesViewModel
 import com.example.studentapp.util.Result
 import kotlinx.coroutines.delay
 
 @Composable
-fun SignupScreen(navHostController: NavHostController, authViewModel: AuthViewModel) {
+fun SignupScreen(navHostController: NavHostController, authViewModel: AuthViewModel,userPreferencesViewModel: UserPreferencesViewModel) {
     val authState by authViewModel.authState.collectAsState()
     var loading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
@@ -65,6 +66,8 @@ fun SignupScreen(navHostController: NavHostController, authViewModel: AuthViewMo
         when (val state = authState) {
             is Result.Success -> {
                 loading = false
+                userPreferencesViewModel.setFirstTimeLogin(false)
+                userPreferencesViewModel.setLoggedIn(true)
                 delay(500) // thoda wait for smooth transition
                 navHostController.navigate(Routes.HomePage) {
                     popUpTo(Routes.SignupScreen) { inclusive = true }
