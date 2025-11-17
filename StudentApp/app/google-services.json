@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "945729300210",
+    "project_id": "campiq-894f3",
+    "storage_bucket": "campiq-894f3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945729300210:android:e0ca5e526d47225df4926b",
+        "android_client_info": {
+          "package_name": "com.example.class_management_system"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcXJKOOG3u0MUsMIlqfqatNNcUuHggsbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945729300210:android:dc9626d3ffb21581f4926b",
+        "android_client_info": {
+          "package_name": "com.example.studentapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcXJKOOG3u0MUsMIlqfqatNNcUuHggsbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
