@@ -2,6 +2,12 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.gms.google.services)
+
+    kotlin("plugin.serialization") version "2.2.0"//Serialization
+
+    id("com.google.devtools.ksp")//Hilt Ksp(All @Annotation File)
+    id("com.google.dagger.hilt.android")//Compiler
 }
 
 android {
@@ -49,6 +55,10 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -56,4 +66,14 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation (libs.material3)
+    implementation(libs.accompanist.systemuicontroller)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.hilt.android)//Hilt Compiler
+    ksp(libs.hilt.android.compiler)//Hilt Ksp(All @Annotation File)
+    implementation(libs.androidx.hilt.navigation.compose)//Hilt For Compose
+    implementation(libs.androidx.navigation.compose)//Navigation
+    implementation(libs.kotlinx.serialization.json)//Serialization
+
 }
